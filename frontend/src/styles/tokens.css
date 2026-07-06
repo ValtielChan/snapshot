@@ -1,0 +1,73 @@
+/* ============================================================
+   TOKENS — Design system néo-brutaliste "Snapshot"
+   Deux couleurs unies complémentaires (jaune / violet), encre
+   noire, bordures épaisses, ombres dures, zéro dégradé dans l'UI.
+   Toute couleur/espacement/ombre utilisé dans l'app DOIT venir
+   d'ici. Voir AGENTS.md § Design system.
+   ============================================================ */
+
+:root {
+  /* --- Couleurs ------------------------------------------- */
+  --primary: #ef8783;        /* corail */
+  --primary-ink: #111111;    /* texte posé sur primary */
+  --secondary: #ffc38c;      /* pêche */
+  --secondary-ink: #111111;  /* texte posé sur secondary */
+
+  --ink: #111111;            /* texte, bordures, ombres */
+  --paper: #faf5ec;          /* fond de page (crème) */
+  --surface: #ffffff;        /* cartes, panneaux */
+  --muted: #6b6459;          /* texte secondaire */
+  --disabled: #d8d2c6;       /* états désactivés */
+
+  /* Sémantique (états) — hors accent, usage parcimonieux */
+  --danger: #e02409;
+  --danger-ink: #ffffff;
+  --success: #0f9d58;
+
+  /* --- Bordures & ombres ----------------------------------- */
+  --border-w: 3px;
+  --border-w-thin: 2px;
+  --border: var(--border-w) solid var(--ink);
+  --border-thin: var(--border-w-thin) solid var(--ink);
+
+  --shadow-x: 3px;
+  --shadow-y: 3px;
+  --shadow: var(--shadow-x) var(--shadow-y) 0 var(--ink);
+  --shadow-sm: 2px 2px 0 var(--ink);
+  --shadow-lg: 6px 6px 0 var(--ink);
+  --shadow-hover: 4px 4px 0 var(--ink);
+  --shadow-active: 1px 1px 0 var(--ink);
+
+  --radius: 0px; /* néo-brutalisme : angles vifs partout */
+
+  /* --- Typographie ------------------------------------------ */
+  --font-display: "Archivo Black", "Arial Black", sans-serif;
+  --font-body: "Archivo", "Segoe UI", system-ui, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", Consolas, monospace;
+
+  --text-xs: 11px;
+  --text-sm: 13px;
+  --text-md: 15px;
+  --text-lg: 18px;
+  --text-xl: 24px;
+  --text-2xl: 34px;
+  --text-3xl: 48px;
+
+  /* --- Espacements (échelle de 4) --------------------------- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+
+  /* --- Mouvements ------------------------------------------- */
+  --transition: 120ms ease-out;
+
+  /* --- Z-index ----------------------------------------------- */
+  --z-panel: 30;
+  --z-modal: 100;
+  --z-toast: 200;
+}

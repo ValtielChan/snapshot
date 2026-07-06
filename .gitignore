@@ -1,0 +1,14 @@
+# Node / frontend
+node_modules/
+frontend/dist/
+*.local
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+
+# Artefacts de session / navigateur
+.playwright-mcp/
+
+# Analyse concurrence : reste en local, pas dans le repo public
+research/

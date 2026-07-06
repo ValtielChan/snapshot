@@ -1,0 +1,369 @@
+/* ============================================================
+   Composants du design system — styles.
+   Convention : .ds-<composant>[--variante]. Tout part des tokens.
+   ============================================================ */
+
+/* --- Button -------------------------------------------------- */
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  font-family: var(--font-body);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.ds-btn:hover:not(:disabled) {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-hover);
+}
+
+.ds-btn:active:not(:disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: var(--shadow-active);
+}
+
+.ds-btn:disabled {
+  background: var(--disabled);
+  color: var(--muted);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.ds-btn--primary { background: var(--primary); color: var(--primary-ink); }
+.ds-btn--secondary { background: var(--secondary); color: var(--secondary-ink); }
+.ds-btn--danger { background: var(--danger); color: var(--danger-ink); }
+.ds-btn--ghost { box-shadow: none; border-color: transparent; background: transparent; }
+.ds-btn--ghost:hover:not(:disabled) { border-color: var(--ink); transform: none; box-shadow: none; }
+.ds-btn--ghost:active:not(:disabled) { transform: none; }
+
+/* Hauteurs FIXES : tous les boutons d'une même taille s'alignent,
+   quel que soit leur contenu (texte, icône, emoji). */
+.ds-btn--sm { font-size: var(--text-xs); height: 32px; padding: 0 12px; }
+.ds-btn--md { font-size: var(--text-sm); height: 40px; padding: 0 16px; }
+.ds-btn--lg { font-size: var(--text-md); height: 48px; padding: 0 24px; }
+
+/* Bouton actif façon "outil sélectionné" (toolbar) : couleurs inversées,
+   MÊME géométrie que l'état repos — pas de translation, pas de changement
+   d'ombre, sinon les boutons voisins ne s'alignent plus. */
+.ds-btn--pressed,
+.ds-btn--pressed:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--primary);
+  transform: none;
+  box-shadow: var(--shadow);
+}
+
+/* --- IconButton ---------------------------------------------- */
+.ds-iconbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px; /* aligné sur .ds-btn--md */
+  font-size: 18px;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.ds-iconbtn:hover:not(:disabled) { transform: translate(-1px, -1px); box-shadow: var(--shadow-hover); }
+.ds-iconbtn:active:not(:disabled) { transform: translate(1px, 1px); box-shadow: var(--shadow-active); }
+.ds-iconbtn--pressed,
+.ds-iconbtn--pressed:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--primary);
+  transform: none;
+  box-shadow: var(--shadow);
+}
+.ds-iconbtn:disabled { background: var(--disabled); color: var(--muted); box-shadow: none; cursor: not-allowed; }
+
+/* --- Panel ---------------------------------------------------- */
+.ds-panel {
+  background: var(--surface);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.ds-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: var(--border);
+  background: var(--primary);
+}
+
+.ds-panel__title {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+}
+
+.ds-panel__body { padding: var(--sp-4); }
+
+/* --- Modal ---------------------------------------------------- */
+.ds-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 17, 17, 0.55);
+  display: grid;
+  place-items: center;
+  z-index: var(--z-modal);
+  padding: var(--sp-5);
+}
+
+.ds-modal {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border: var(--border);
+  box-shadow: var(--shadow-lg);
+}
+
+.ds-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-4);
+  border-bottom: var(--border);
+  background: var(--secondary);
+  color: var(--secondary-ink);
+}
+
+.ds-modal__title { font-family: var(--font-display); font-size: var(--text-md); text-transform: uppercase; }
+.ds-modal__body { padding: var(--sp-5); }
+
+.ds-modal__close {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: var(--border-thin);
+  border-color: var(--secondary-ink);
+  background: transparent;
+  color: var(--secondary-ink);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.ds-modal__close:hover { background: var(--secondary-ink); color: var(--secondary); }
+
+/* --- Input / Field -------------------------------------------- */
+.ds-field { display: flex; flex-direction: column; gap: var(--sp-2); }
+
+.ds-label {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.ds-input {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  padding: 10px 12px;
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  width: 100%;
+}
+
+.ds-input:focus { outline: none; box-shadow: var(--shadow-sm); background: #fffef2; }
+.ds-input::placeholder { color: var(--muted); }
+.ds-input--error { border-color: var(--danger); }
+
+.ds-error { font-size: var(--text-sm); font-weight: 700; color: var(--danger); }
+
+/* --- Slider ---------------------------------------------------- */
+.ds-slider { display: flex; flex-direction: column; gap: var(--sp-2); }
+
+.ds-slider__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.ds-slider__value { font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 700; }
+
+.ds-slider input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 12px;
+  background: var(--surface);
+  border: var(--border-thin);
+  cursor: pointer;
+}
+
+.ds-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  background: var(--primary);
+  border: var(--border);
+  box-shadow: 2px 2px 0 var(--ink);
+  cursor: grab;
+}
+
+.ds-slider input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--primary);
+  border: var(--border);
+  border-radius: 0;
+  box-shadow: 2px 2px 0 var(--ink);
+  cursor: grab;
+}
+
+/* --- Toggle ----------------------------------------------------- */
+.ds-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  cursor: pointer;
+  user-select: none;
+}
+
+.ds-toggle__track {
+  position: relative;
+  width: 52px;
+  height: 28px;
+  border: var(--border);
+  background: var(--surface);
+  transition: background var(--transition);
+  flex-shrink: 0;
+}
+
+.ds-toggle__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  background: var(--ink);
+  transition: transform var(--transition), background var(--transition);
+}
+
+.ds-toggle input { position: absolute; opacity: 0; width: 0; height: 0; }
+
+.ds-toggle input:checked + .ds-toggle__track { background: var(--primary); }
+.ds-toggle input:checked + .ds-toggle__track .ds-toggle__thumb { transform: translateX(24px); }
+.ds-toggle input:focus-visible + .ds-toggle__track { outline: var(--border-w) solid var(--secondary); outline-offset: 2px; }
+
+.ds-toggle__label { font-size: var(--text-sm); font-weight: 700; text-transform: uppercase; }
+
+/* --- Tabs -------------------------------------------------------- */
+.ds-tabs { display: flex; border: var(--border); background: var(--surface); }
+
+.ds-tab {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--surface);
+  color: var(--ink);
+  border: none;
+  border-right: var(--border);
+  cursor: pointer;
+}
+
+.ds-tab:last-child { border-right: none; }
+.ds-tab--active { background: var(--ink); color: var(--primary); }
+
+/* --- Badge / Kbd -------------------------------------------------- */
+.ds-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border: var(--border-thin);
+}
+
+.ds-badge--primary { background: var(--primary); }
+.ds-badge--secondary { background: var(--secondary); color: var(--secondary-ink); }
+.ds-badge--outline { background: var(--surface); }
+.ds-badge--danger { background: var(--danger); color: var(--danger-ink); }
+
+.ds-kbd {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  padding: 2px 7px;
+  background: var(--surface);
+  border: var(--border-thin);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* --- Swatch -------------------------------------------------------- */
+.ds-swatch {
+  width: 44px;
+  height: 44px;
+  border: var(--border-thin);
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition: transform var(--transition);
+}
+
+.ds-swatch:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--ink); }
+
+.ds-swatch--active {
+  border: var(--border);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.ds-swatch--active::after {
+  content: "✓";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 16px;
+  color: #fff;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.9);
+}
+
+/* --- Toast ----------------------------------------------------------- */
+.ds-toast {
+  position: fixed;
+  bottom: var(--sp-5);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-toast);
+  background: var(--ink);
+  color: var(--primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: var(--text-sm);
+  padding: var(--sp-3) var(--sp-5);
+  border: var(--border);
+  border-color: var(--primary);
+  box-shadow: var(--shadow);
+}
