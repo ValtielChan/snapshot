@@ -1,13 +1,28 @@
 /**
- * Barre d'outils principale de l'éditeur.
- * Groupes : import · fond/format · cadre · historique · export.
+ * Main editor toolbar.
+ * Groups: import · background/layout · frame · history · export.
  */
 
 import { useEffect, useRef, useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faCopy,
+  faDownload,
+  faExpand,
+  faEye,
+  faLeftRight,
+  faMoon,
+  faPalette,
+  faRotateLeft,
+  faRotateRight,
+  faSun,
+  faUpload,
+  faWindowMaximize,
+} from '@fortawesome/free-solid-svg-icons'
 import { Button, IconButton, Slider } from '../ui'
 import { loadImageFile, useEditor } from './editorStore'
 
-/** Popover ancré sous un bouton de la toolbar, fermé au clic extérieur. */
+/** Popover anchored under a toolbar button, closed on outside click. */
 function ToolbarPopover({ open, onClose, children }) {
   const ref = useRef(null)
 
@@ -37,13 +52,15 @@ export function Toolbar({ onToggleBackgroundPanel, onCopy, onDownload, exporting
     padding,
     width,
     apply,
+    preview,
+    commit,
     undo,
     redo,
     past,
     future,
   } = useEditor()
 
-  const [popover, setPopover] = useState(null) // 'width' | 'spacing' | null
+  const [popover, setPopover] = useState(null) // 'width' | 'padding' | null
   const fileRef = useRef(null)
 
   const hasImage = Boolean(image)
@@ -51,7 +68,7 @@ export function Toolbar({ onToggleBackgroundPanel, onCopy, onDownload, exporting
   return (
     <div className="editor__tools">
       <Button variant="primary" size="md" onClick={() => fileRef.current?.click()}>
-        ⬆ Importer
+        <FontAwesomeIcon icon={faUpload} /> Import
       </Button>
       <input
         ref={fileRef}
@@ -64,7 +81,7 @@ export function Toolbar({ onToggleBackgroundPanel, onCopy, onDownload, exporting
       <div className="editor__sep" aria-hidden="true" />
 
       <Button size="md" disabled={!hasImage} onClick={onToggleBackgroundPanel}>
-        🎨 Fond
+        <FontAwesomeIcon icon={faPalette} /> Background
       </Button>
 
       <Button
@@ -72,41 +89,51 @@ export function Toolbar({ onToggleBackgroundPanel, onCopy, onDownload, exporting
         pressed={hasImage && showBackground}
         disabled={!hasImage}
         onClick={() => apply({ showBackground: !showBackground })}
-        title="Afficher / masquer le fond"
+        title="Show / hide the background"
       >
-        Fond visible
+        <FontAwesomeIcon icon={faEye} /> Show BG
       </Button>
 
       <div className="toolbar-popover-anchor">
-        <Button size="md" disabled={!hasImage} onClick={() => setPopover(popover === 'width' ? null : 'width')}>
-          ↔ Largeur
+        <Button
+          size="md"
+          disabled={!hasImage}
+          onClick={() => setPopover(popover === 'width' ? null : 'width')}
+        >
+          <FontAwesomeIcon icon={faLeftRight} /> Width
         </Button>
         <ToolbarPopover open={popover === 'width'} onClose={() => setPopover(null)}>
           <Slider
-            label="Largeur de scène"
+            label="Scene width"
             value={width}
             min={480}
             max={1600}
             step={10}
             unit="px"
-            onChange={(v) => apply({ width: v })}
+            onChange={(v) => preview({ width: v })}
+            onCommit={commit}
           />
         </ToolbarPopover>
       </div>
 
       <div className="toolbar-popover-anchor">
-        <Button size="md" disabled={!hasImage} onClick={() => setPopover(popover === 'spacing' ? null : 'spacing')}>
-          ⊡ Marge
+        <Button
+          size="md"
+          disabled={!hasImage}
+          onClick={() => setPopover(popover === 'padding' ? null : 'padding')}
+        >
+          <FontAwesomeIcon icon={faExpand} /> Padding
         </Button>
-        <ToolbarPopover open={popover === 'spacing'} onClose={() => setPopover(null)}>
+        <ToolbarPopover open={popover === 'padding'} onClose={() => setPopover(null)}>
           <Slider
-            label="Marge autour"
+            label="Padding around"
             value={padding}
             min={0}
             max={200}
             step={4}
             unit="px"
-            onChange={(v) => apply({ padding: v })}
+            onChange={(v) => preview({ padding: v })}
+            onCommit={commit}
           />
         </ToolbarPopover>
       </div>
@@ -118,36 +145,36 @@ export function Toolbar({ onToggleBackgroundPanel, onCopy, onDownload, exporting
         pressed={hasImage && frame}
         disabled={!hasImage}
         onClick={() => apply({ frame: !frame })}
-        title="Cadre de fenêtre macOS"
+        title="macOS window frame"
       >
-        ▭ Cadre
+        <FontAwesomeIcon icon={faWindowMaximize} /> Frame
       </Button>
 
       <Button
         size="md"
         disabled={!hasImage || !frame}
         onClick={() => apply({ frameDark: !frameDark })}
-        title="Thème du cadre"
+        title="Frame theme"
       >
-        {frameDark ? '◐ Sombre' : '◑ Clair'}
+        <FontAwesomeIcon icon={frameDark ? faMoon : faSun} /> {frameDark ? 'Dark' : 'Light'}
       </Button>
 
       <div className="editor__sep" aria-hidden="true" />
 
-      <IconButton label="Annuler (Ctrl+Z)" disabled={past.length === 0} onClick={undo}>
-        ↶
+      <IconButton label="Undo (Ctrl+Z)" disabled={past.length === 0} onClick={undo}>
+        <FontAwesomeIcon icon={faRotateLeft} />
       </IconButton>
-      <IconButton label="Rétablir (Ctrl+Shift+Z)" disabled={future.length === 0} onClick={redo}>
-        ↷
+      <IconButton label="Redo (Ctrl+Shift+Z)" disabled={future.length === 0} onClick={redo}>
+        <FontAwesomeIcon icon={faRotateRight} />
       </IconButton>
 
       <div className="editor__spacer" />
 
       <Button size="md" disabled={!hasImage || exporting} onClick={onCopy}>
-        Copier
+        <FontAwesomeIcon icon={faCopy} /> Copy
       </Button>
       <Button variant="secondary" size="md" disabled={!hasImage || exporting} onClick={onDownload}>
-        {exporting ? '…' : '⬇ Télécharger'}
+        <FontAwesomeIcon icon={faDownload} /> {exporting ? '…' : 'Download'}
       </Button>
     </div>
   )

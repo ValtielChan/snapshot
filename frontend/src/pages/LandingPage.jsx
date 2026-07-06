@@ -1,61 +1,72 @@
 /**
- * Landing page (accueil) — présentation de l'app, 100 % statique.
- * Sémantique HTML soignée pour le SEO ; le CTA principal mène à l'éditeur.
+ * Landing page (home) — fully static presentation of the app.
+ * Clean semantic HTML for SEO; the main CTA leads to the editor.
  */
 
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGithub } from '@fortawesome/free-brands-svg-icons'
+import {
+  faBolt,
+  faImages,
+  faLock,
+  faMugHot,
+  faRulerCombined,
+  faSliders,
+  faWindowMaximize,
+} from '@fortawesome/free-solid-svg-icons'
 import logoUrl from '../assets/logo.png'
 import { Badge, Button, Kbd } from '../ui'
 import './landing.css'
 
 const FEATURES = [
   {
-    icon: '🖼️',
-    title: '156 fonds prêts à l\'emploi',
-    text: 'Sept familles de dégradés et couleurs — du pastel calme au néon cosmique — appliqués en un clic.',
+    icon: faImages,
+    title: '156 ready-made backgrounds',
+    text: 'Seven families of gradients and colors — from calm pastels to cosmic neons — applied in one click.',
   },
   {
-    icon: '🎛️',
-    title: 'Dégradés sur mesure',
-    text: 'Linéaire, radial, angulaire ou diamant : direction réglable et jusqu\'à quatre couleurs, ou un aplat uni.',
+    icon: faSliders,
+    title: 'Custom gradients',
+    text: 'Linear, radial, angular or diamond: adjustable direction, up to four colors, or a solid fill.',
   },
   {
-    icon: '💻',
-    title: 'Cadre de fenêtre macOS',
-    text: 'Habillez votre capture d\'une fenêtre crédible, en clair ou en sombre, avec ombre portée douce.',
+    icon: faWindowMaximize,
+    title: 'macOS window frame',
+    text: 'Dress your capture in a credible window, light or dark, with a soft drop shadow.',
   },
   {
-    icon: '📐',
-    title: 'Largeur & marges précises',
-    text: 'Ajustez la taille de scène et l\'espace autour de l\'image au pixel près, avec zoom et annulation illimitée.',
+    icon: faRulerCombined,
+    title: 'Precise width & padding',
+    text: 'Adjust the scene size and the space around your image to the pixel, with zoom and unlimited undo.',
   },
   {
-    icon: '⚡',
-    title: 'Export instantané',
-    text: 'PNG haute résolution (×2) téléchargé ou copié directement dans le presse-papier, prêt à publier.',
+    icon: faBolt,
+    title: 'Instant export',
+    text: 'High-resolution PNG (2×), downloaded or copied straight to your clipboard, ready to publish.',
   },
   {
-    icon: '🔒',
-    title: '100 % privé',
-    text: 'Tout se passe dans votre navigateur : aucune image envoyée sur un serveur, aucun compte, aucune limite.',
+    icon: faLock,
+    title: '100% private',
+    text: 'Everything happens in your browser: no image ever leaves your machine, no account, no limits.',
   },
 ]
 
 const STEPS = [
   {
     n: '1',
-    title: 'Importez',
-    text: 'Glissez-déposez une image, cliquez pour parcourir, ou collez-la avec Ctrl+V.',
+    title: 'Import',
+    text: 'Drag and drop an image, click to browse, or paste it with Ctrl+V.',
   },
   {
     n: '2',
-    title: 'Habillez',
-    text: 'Choisissez un fond, ajustez cadre, largeur et marges. Le rendu est beau dès la première seconde.',
+    title: 'Style',
+    text: 'Pick a background, tune the frame, width and padding. It looks great from the first second.',
   },
   {
     n: '3',
-    title: 'Exportez',
-    text: 'Téléchargez le PNG haute résolution ou copiez-le, et publiez-le où vous voulez.',
+    title: 'Export',
+    text: 'Download the high-resolution PNG or copy it, and publish it anywhere.',
   },
 ]
 
@@ -64,10 +75,10 @@ export function LandingPage() {
     <div className="landing">
       <header className="landing__nav">
         <div className="landing__nav-brand">
-          <img src={logoUrl} alt="Logo Snapshot" width="40" height="40" />
+          <img src={logoUrl} alt="Snapshot logo" width="40" height="40" />
           <span>Snapshot</span>
         </div>
-        <nav className="landing__nav-links" aria-label="Navigation principale">
+        <nav className="landing__nav-links" aria-label="Main navigation">
           <Link to="/design" className="landing__nav-link">
             Design system
           </Link>
@@ -77,11 +88,19 @@ export function LandingPage() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            GitHub
+            <FontAwesomeIcon icon={faGithub} /> GitHub
+          </a>
+          <a
+            href="https://ko-fi.com/valtiel_"
+            className="landing__nav-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faMugHot} /> Buy me a coffee
           </a>
           <Link to="/editor">
             <Button variant="primary" size="md">
-              Ouvrir l'éditeur
+              Open the editor
             </Button>
           </Link>
         </nav>
@@ -98,35 +117,35 @@ export function LandingPage() {
             aria-hidden="true"
           />
           <h1>
-            De belles captures d'écran,
+            Beautiful screenshots,
             <br />
-            <mark>en quelques secondes.</mark>
+            <mark>in seconds.</mark>
           </h1>
           <p className="landing__hero-sub">
-            Importez un screenshot, posez-le sur un fond qui claque, encadrez-le comme une vraie
-            fenêtre et exportez un PNG prêt à publier. Gratuit, sans compte, sans watermark.
+            Drop a screenshot, set it on a gorgeous background, frame it like a real window and
+            export a ready-to-share PNG. Free, no account, no watermark.
           </p>
           <div className="landing__hero-cta">
             <Link to="/editor">
               <Button variant="primary" size="lg">
-                Ouvrir l'éditeur →
+                Open the editor →
               </Button>
             </Link>
             <div className="landing__hero-badges">
-              <Badge variant="secondary">Gratuit</Badge>
-              <Badge variant="outline">Sans compte</Badge>
-              <Badge variant="outline">100 % local</Badge>
+              <Badge variant="secondary">Free</Badge>
+              <Badge variant="outline">No account</Badge>
+              <Badge variant="outline">100% local</Badge>
             </div>
           </div>
         </section>
 
         <section className="landing__section" aria-labelledby="features-title">
-          <h2 id="features-title">Tout ce qu'il faut, rien de superflu</h2>
+          <h2 id="features-title">Everything you need, nothing you don't</h2>
           <div className="landing__features">
             {FEATURES.map((f) => (
               <article key={f.title} className="landing__feature">
                 <span className="landing__feature-icon" aria-hidden="true">
-                  {f.icon}
+                  <FontAwesomeIcon icon={f.icon} />
                 </span>
                 <h3>{f.title}</h3>
                 <p>{f.text}</p>
@@ -136,7 +155,7 @@ export function LandingPage() {
         </section>
 
         <section className="landing__section" aria-labelledby="steps-title">
-          <h2 id="steps-title">Trois gestes, c'est tout</h2>
+          <h2 id="steps-title">Three moves, that's it</h2>
           <div className="landing__steps">
             {STEPS.map((s) => (
               <article key={s.n} className="landing__step">
@@ -149,32 +168,35 @@ export function LandingPage() {
             ))}
           </div>
           <p className="landing__shortcuts">
-            Raccourcis : <Kbd>Ctrl</Kbd>+<Kbd>V</Kbd> coller · <Kbd>Ctrl</Kbd>+<Kbd>Z</Kbd>{' '}
-            annuler · <Kbd>Ctrl</Kbd>+<Kbd>0</Kbd> zoom 100 %
+            Shortcuts: <Kbd>Ctrl</Kbd>+<Kbd>V</Kbd> paste · <Kbd>Ctrl</Kbd>+<Kbd>Z</Kbd> undo ·{' '}
+            <Kbd>Ctrl</Kbd>+<Kbd>0</Kbd> reset zoom
           </p>
         </section>
 
         <section className="landing__section landing__final">
-          <h2>Votre prochaine capture mérite mieux qu'un PNG brut.</h2>
+          <h2>Your next screenshot deserves better than a raw PNG.</h2>
           <Link to="/editor">
             <Button variant="primary" size="lg">
-              Essayer maintenant — c'est gratuit
+              Try it now — it's free
             </Button>
           </Link>
         </section>
       </main>
 
       <footer className="landing__footer">
-        <span>Snapshot — open source, sans tracking, sans serveur.</span>
-        <nav aria-label="Liens de pied de page">
-          <Link to="/editor">Éditeur</Link>
+        <span>Snapshot — open source, no tracking, no server.</span>
+        <nav aria-label="Footer links">
+          <Link to="/editor">Editor</Link>
           <Link to="/design">Design system</Link>
           <a
             href="https://github.com/ValtielChan/snapshot"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Code source
+            Source code
+          </a>
+          <a href="https://ko-fi.com/valtiel_" target="_blank" rel="noopener noreferrer">
+            <FontAwesomeIcon icon={faMugHot} /> Buy me a coffee
           </a>
         </nav>
       </footer>

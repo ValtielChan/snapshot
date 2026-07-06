@@ -62,7 +62,7 @@ export const CanvasStage = forwardRef(function CanvasStage(_, sceneRef) {
               ))}
             </div>
           )}
-          <img className="scene__img" src={image.src} alt="Capture importée" />
+          <img className="scene__img" src={image.src} alt="Imported screenshot" />
         </div>
       </div>
     </div>

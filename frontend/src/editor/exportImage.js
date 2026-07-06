@@ -19,7 +19,7 @@ const EXPORT_OPTIONS = {
 
 async function sceneToBlob(node) {
   const blob = await toBlob(node, EXPORT_OPTIONS)
-  if (!blob) throw new Error("L'export a échoué")
+  if (!blob) throw new Error('Export failed')
   return blob
 }
 

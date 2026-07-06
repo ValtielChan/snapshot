@@ -11,19 +11,33 @@
 
 import { RAW_CATEGORIES } from './backgrounds.data'
 
-export const BACKGROUND_CATEGORIES = RAW_CATEGORIES
+// English display labels (the generated data file keeps its original ids).
+const LABELS = {
+  calme: 'Calm',
+  cosmique: 'Cosmic',
+  colore: 'Colorful',
+  nature: 'Nature',
+  luxe: 'Luxury & Metallic',
+  uni: 'Solid',
+  sombre: 'Dark',
+}
 
-export const DEFAULT_BACKGROUND = RAW_CATEGORIES[0].items[9] // dusk (Calme)
+export const BACKGROUND_CATEGORIES = RAW_CATEGORIES.map((cat) => ({
+  ...cat,
+  label: LABELS[cat.id] ?? cat.label,
+}))
+
+export const DEFAULT_BACKGROUND = RAW_CATEGORIES[0].items[9] // dusk (Calm)
 
 /* ------------------------------------------------------------------ */
 /* Constructeur custom : 4 types de dégradé, direction, 2 à 4 couleurs */
 /* ------------------------------------------------------------------ */
 
 export const GRADIENT_TYPES = [
-  { id: 'linear', label: 'Linéaire' },
+  { id: 'linear', label: 'Linear' },
   { id: 'radial', label: 'Radial' },
-  { id: 'angular', label: 'Angulaire' },
-  { id: 'diamond', label: 'Diamant' },
+  { id: 'angular', label: 'Angular' },
+  { id: 'diamond', label: 'Diamond' },
 ]
 
 /**

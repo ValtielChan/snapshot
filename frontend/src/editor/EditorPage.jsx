@@ -1,11 +1,13 @@
 /**
- * Page éditeur : assemble toolbar, scène et panneaux flottants.
- * Raccourcis : Ctrl+Z / Ctrl+Shift+Z (historique), Ctrl+0 (zoom), Ctrl+V (import).
- * 100 % côté client : l'image ne quitte jamais le navigateur.
+ * Editor page: toolbar, scene and floating panels.
+ * Shortcuts: Ctrl+Z / Ctrl+Shift+Z (history), Ctrl+0 (zoom), Ctrl+V (import).
+ * 100% client-side: the image never leaves the browser.
  */
 
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMugHot } from '@fortawesome/free-solid-svg-icons'
 import logoUrl from '../assets/logo.png'
 import { Toast } from '../ui'
 import { BackgroundPanel } from './BackgroundPanel'
@@ -67,7 +69,7 @@ export function EditorPage() {
       await fn(sceneRef.current)
       flash(successMessage)
     } catch (err) {
-      flash(`Échec : ${err.message}`)
+      flash(`Failed: ${err.message}`)
     } finally {
       setExporting(false)
     }
@@ -76,17 +78,28 @@ export function EditorPage() {
   return (
     <div className="editor">
       <header className="editor__header">
-        <Link to="/" className="editor__brand" title="Retour à l'accueil">
+        <Link to="/" className="editor__brand" title="Back to home">
           <img className="editor__brand-mark" src={logoUrl} alt="" width="34" height="34" />
           Snapshot
         </Link>
 
         <Toolbar
           onToggleBackgroundPanel={() => setBgPanelOpen((v) => !v)}
-          onCopy={() => handleExport(copyScene, 'Copié dans le presse-papier !')}
-          onDownload={() => handleExport(downloadScene, 'Image téléchargée !')}
+          onCopy={() => handleExport(copyScene, 'Copied to clipboard!')}
+          onDownload={() => handleExport(downloadScene, 'Image downloaded!')}
           exporting={exporting}
         />
+
+        <a
+          className="ds-iconbtn"
+          href="https://ko-fi.com/valtiel_"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Buy me a coffee"
+          aria-label="Buy me a coffee on Ko-fi"
+        >
+          <FontAwesomeIcon icon={faMugHot} />
+        </a>
       </header>
 
       <div className="editor__body">

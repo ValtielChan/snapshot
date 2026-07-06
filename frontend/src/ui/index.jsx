@@ -5,6 +5,8 @@
  */
 
 import { useEffect } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import './ui.css'
 
 /* --- Button ------------------------------------------------------ */
@@ -80,8 +82,8 @@ export function Modal({ open, title, onClose, children }) {
       <div className="ds-modal">
         <div className="ds-modal__header">
           <span className="ds-modal__title">{title}</span>
-          <button type="button" className="ds-modal__close" onClick={onClose} aria-label="Fermer">
-            ✕
+          <button type="button" className="ds-modal__close" onClick={onClose} aria-label="Close">
+            <FontAwesomeIcon icon={faXmark} />
           </button>
         </div>
         <div className="ds-modal__body">{children}</div>
@@ -107,7 +109,12 @@ export function Input({ error = false, className = '', ...props }) {
 }
 
 /* --- Slider ------------------------------------------------------------ */
-export function Slider({ label, value, min, max, step = 1, unit = '', onChange }) {
+/**
+ * `onChange` fires continuously while dragging (live preview).
+ * `onCommit` fires once when the gesture ends (mouse/touch release or key
+ * release) — wire it to the history commit so a whole drag = one undo step.
+ */
+export function Slider({ label, value, min, max, step = 1, unit = '', onChange, onCommit }) {
   return (
     <div className="ds-slider">
       <div className="ds-slider__head">
@@ -124,6 +131,8 @@ export function Slider({ label, value, min, max, step = 1, unit = '', onChange }
         step={step}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
+        onPointerUp={onCommit}
+        onKeyUp={onCommit}
         aria-label={label}
       />
     </div>

@@ -104,7 +104,16 @@ Snapshot/
   — c'est ce qui alimente l'undo/redo. Zoom et image sont hors historique
   (navigation, pas édition), c'est voulu.
 - CSS par domaine (`editor.css`, `landing.css`), classes BEM-light.
-- Texte UI en **français**, code en **anglais**.
+- Texte UI, landing et SEO en **anglais** (produit international), code en
+  **anglais**. Cette doc (AGENTS.md) reste en français.
+- **Icônes : Font Awesome** (`@fortawesome/react-fontawesome`), jamais
+  d'emojis dans l'interface.
+- **Historique — deux familles d'actions** : action instantanée (clic swatch,
+  toggle) → `apply(patch)` ; geste continu (drag de slider, color picker) →
+  `preview(patch)` pendant le geste puis `commit()` à la fin (relâchement,
+  fermeture du picker). Un drag entier = UNE entrée d'historique. Le composant
+  `Slider` expose `onCommit` pour ça ; les inputs couleur natifs committent
+  sur l'événement DOM `change` (voir `ColorInput` dans BackgroundPanel).
 - **Aucun appel réseau applicatif** : pas de fetch, pas d'analytics. Si une
   feature semble exiger un serveur, repenser la feature.
 

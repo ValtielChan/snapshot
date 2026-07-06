@@ -1,6 +1,8 @@
-/** Zone d'import : drag-and-drop, clic (file picker), et collage Ctrl+V. */
+/** Import zone: drag-and-drop, click (file picker) and Ctrl+V paste. */
 
 import { useEffect, useRef, useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCloudArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { Badge } from '../ui'
 import { loadImageFile } from './editorStore'
 
@@ -38,14 +40,16 @@ export function Dropzone() {
       role="button"
       tabIndex={0}
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && inputRef.current?.click()}
-      aria-label="Importer une image"
+      aria-label="Import an image"
     >
-      <div className="dropzone__icon">⬆</div>
-      <h2 className="dropzone__title">Dépose une image ici</h2>
+      <div className="dropzone__icon">
+        <FontAwesomeIcon icon={faCloudArrowUp} />
+      </div>
+      <h2 className="dropzone__title">Drop an image here</h2>
       <p className="dropzone__hint">
-        Clique pour parcourir, ou colle depuis le presse-papier (Ctrl+V).
+        Click to browse, or paste from your clipboard (Ctrl+V).
         <br />
-        Ton image ne quitte jamais ton navigateur.
+        Your image never leaves your browser.
       </p>
       <div className="dropzone__formats">
         {FORMATS.map((f) => (

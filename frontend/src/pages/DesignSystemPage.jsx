@@ -1,11 +1,19 @@
 /**
- * Vitrine du design system — /design
- * Référence visuelle vivante : chaque composant y est monté avec toutes
- * ses variantes. À mettre à jour à chaque ajout de composant (AGENTS.md).
+ * Design system showcase — /design
+ * Living visual reference: every component is mounted here with all its
+ * variants. Update it whenever a component is added (see AGENTS.md).
  */
 
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faPlus,
+  faRotateLeft,
+  faRotateRight,
+  faWindowMaximize,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons'
 import {
   Badge,
   Button,
@@ -53,15 +61,15 @@ export function DesignSystemPage() {
       <header className="dsp-hero">
         <h1>Design System</h1>
         <p>
-          Néo-brutalisme bicolore : corail <Kbd>#EF8783</Kbd> × pêche <Kbd>#FFC38C</Kbd>, bordures
-          3px, ombres dures, zéro dégradé, zéro arrondi.
+          Two-color neo-brutalism: coral <Kbd>#EF8783</Kbd> × peach <Kbd>#FFC38C</Kbd>, 3px
+          borders, hard shadows, zero gradients, zero rounded corners.
         </p>
         <Link to="/">
-          <Button variant="primary">← Retour à l'éditeur</Button>
+          <Button variant="primary">← Back to home</Button>
         </Link>
       </header>
 
-      <Section title="01 · Couleurs">
+      <Section title="01 · Colors">
         <div className="dsp-tokens">
           {TOKENS.map((t) => (
             <div key={t.name} className="dsp-token" style={{ background: t.value, color: t.ink }}>
@@ -72,31 +80,31 @@ export function DesignSystemPage() {
         </div>
       </Section>
 
-      <Section title="02 · Typographie">
+      <Section title="02 · Typography">
         <div className="dsp-type">
-          <h1>Titre display H1</h1>
-          <h2>Titre display H2</h2>
-          <h3>Titre display H3</h3>
+          <h1>Display heading H1</h1>
+          <h2>Display heading H2</h2>
+          <h3>Display heading H3</h3>
           <p>
-            Corps de texte — Archivo. Lisible, direct, sans fioriture. Les valeurs numériques
-            passent en <span className="dsp-mono">monospace 123 456</span>.
+            Body text — Archivo. Readable, direct, no frills. Numeric values switch to{' '}
+            <span className="dsp-mono">monospace 123 456</span>.
           </p>
           <p>
-            Raccourcis : <Kbd>Ctrl</Kbd> + <Kbd>Z</Kbd> pour annuler, <Kbd>Ctrl</Kbd> +{' '}
-            <Kbd>V</Kbd> pour coller.
+            Shortcuts: <Kbd>Ctrl</Kbd> + <Kbd>Z</Kbd> to undo, <Kbd>Ctrl</Kbd> + <Kbd>V</Kbd> to
+            paste.
           </p>
         </div>
       </Section>
 
-      <Section title="03 · Boutons">
+      <Section title="03 · Buttons">
         <div className="dsp-row">
-          <Button variant="primary">Primaire</Button>
-          <Button variant="secondary">Secondaire</Button>
-          <Button>Défaut</Button>
+          <Button variant="primary">Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button>Default</Button>
           <Button variant="danger">Danger</Button>
           <Button variant="ghost">Ghost</Button>
-          <Button disabled>Désactivé</Button>
-          <Button pressed>Actif / outil</Button>
+          <Button disabled>Disabled</Button>
+          <Button pressed>Active / tool</Button>
         </div>
         <div className="dsp-row">
           <Button variant="primary" size="sm">
@@ -110,29 +118,35 @@ export function DesignSystemPage() {
           </Button>
         </div>
         <div className="dsp-row">
-          <IconButton label="Annuler">↶</IconButton>
-          <IconButton label="Rétablir">↷</IconButton>
-          <IconButton label="Zoom avant">+</IconButton>
-          <IconButton label="Actif" pressed>
-            ▭
+          <IconButton label="Undo">
+            <FontAwesomeIcon icon={faRotateLeft} />
           </IconButton>
-          <IconButton label="Désactivé" disabled>
-            ✕
+          <IconButton label="Redo">
+            <FontAwesomeIcon icon={faRotateRight} />
+          </IconButton>
+          <IconButton label="Zoom in">
+            <FontAwesomeIcon icon={faPlus} />
+          </IconButton>
+          <IconButton label="Active" pressed>
+            <FontAwesomeIcon icon={faWindowMaximize} />
+          </IconButton>
+          <IconButton label="Disabled" disabled>
+            <FontAwesomeIcon icon={faXmark} />
           </IconButton>
         </div>
       </Section>
 
-      <Section title="04 · Formulaires">
+      <Section title="04 · Forms">
         <div className="dsp-grid2">
           <Field label="Email">
-            <Input placeholder="toi@exemple.com" />
+            <Input placeholder="you@example.com" />
           </Field>
-          <Field label="Avec erreur" error="Ce champ est requis">
+          <Field label="With error" error="This field is required">
             <Input placeholder="…" error />
           </Field>
-          <Slider label="Marge" value={slider} min={0} max={200} unit="px" onChange={setSlider} />
+          <Slider label="Padding" value={slider} min={0} max={200} unit="px" onChange={setSlider} />
           <div className="dsp-row" style={{ alignItems: 'center' }}>
-            <Toggle label="Cadre visible" checked={toggleOn} onChange={setToggleOn} />
+            <Toggle label="Frame visible" checked={toggleOn} onChange={setToggleOn} />
           </div>
         </div>
       </Section>
@@ -141,38 +155,38 @@ export function DesignSystemPage() {
         <div className="dsp-grid2">
           <Tabs
             tabs={[
-              { id: 'a', label: 'Thèmes' },
+              { id: 'a', label: 'Themes' },
               { id: 'b', label: 'Custom' },
             ]}
             active={tab}
             onChange={setTab}
           />
           <div className="dsp-row">
-            <Badge variant="primary">Primaire</Badge>
-            <Badge variant="secondary">Pro</Badge>
+            <Badge variant="primary">Primary</Badge>
+            <Badge variant="secondary">Secondary</Badge>
             <Badge variant="outline">Outline</Badge>
-            <Badge variant="danger">Erreur</Badge>
+            <Badge variant="danger">Error</Badge>
           </div>
         </div>
       </Section>
 
       <Section title="06 · Surfaces">
         <div className="dsp-grid2">
-          <Panel title="Panneau titré" actions={<Badge variant="secondary">Action</Badge>}>
-            Contenu du panneau. Header jaune, bordure 3px, ombre dure 5×5.
+          <Panel title="Titled panel" actions={<Badge variant="secondary">Action</Badge>}>
+            Panel content. Coral header, 3px border, hard 3×3 shadow.
           </Panel>
           <div className="dsp-row">
             <Button variant="secondary" onClick={() => setModalOpen(true)}>
-              Ouvrir une modale
+              Open a modal
             </Button>
           </div>
         </div>
       </Section>
 
-      <Section title="07 · Swatches (contenu produit)">
+      <Section title="07 · Swatches (product content)">
         <p className="dsp-note">
-          Exception contrôlée : les dégradés sont autorisés <em>dans la scène exportée</em> (c'est
-          le produit), jamais dans l'UI.
+          Controlled exception: gradients are allowed <em>inside the exported scene</em> (that's
+          the product), never in the UI.
         </p>
         <div className="dsp-row">
           {['#EF8783', '#FFC38C', '#111111', 'linear-gradient(135deg,#667eea,#f093fb)'].map((c) => (
@@ -187,12 +201,12 @@ export function DesignSystemPage() {
         </div>
       </Section>
 
-      <Modal open={modalOpen} title="Exemple de modale" onClose={() => setModalOpen(false)}>
+      <Modal open={modalOpen} title="Example modal" onClose={() => setModalOpen(false)}>
         <p style={{ marginBottom: 'var(--sp-4)' }}>
-          Header violet, fermeture par Échap, clic overlay ou bouton ✕.
+          Peach header, closes with Escape, overlay click or the ✕ button.
         </p>
         <Button variant="primary" onClick={() => setModalOpen(false)}>
-          Compris
+          Got it
         </Button>
       </Modal>
     </div>
