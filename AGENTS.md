@@ -1,166 +1,176 @@
-# AGENTS.md — Snapshot
+# AGENTS.md
 
-Guide de référence pour toute personne (ou agent) qui travaille sur ce dépôt.
-À lire avant de coder. À **mettre à jour** dès qu'une convention change.
+Reference guide for anyone (human or agent) working on this repository.
+Read it before writing code. **Update it** whenever a convention changes.
 
 ---
 
-## 1. Le produit
+## 1. The product
 
-Application web de mise en valeur de captures d'écran : on importe une image,
-elle est posée sur un fond (dégradé/uni), entourée d'un cadre de fenêtre macOS,
-avec marge et ombre, puis exportée en PNG (téléchargement ou presse-papier).
+A web app that makes screenshots look good: import an image, drop it on a
+background (gradient or solid), wrap it in a macOS window frame with padding
+and a shadow, then export a PNG (download or clipboard).
 
-**Positionnement : gratuit, public, ouvert.** Pas de compte, pas de premium,
-pas de watermark, pas de tracking. **Aucun backend** : tout se passe côté
-client, l'image ne quitte jamais le navigateur. C'est un argument produit
-(confidentialité) et une contrainte d'architecture — toute feature doit
-fonctionner en statique.
-
-L'analyse du produit de référence (ilovesnapshots.online) est dans
-[`research/cahier-des-charges.html`](research/cahier-des-charges.html) —
-utile pour les idées de features, ignorer tout ce qui est premium/auth.
+**Positioning: free, public, open.** No account, no premium tier, no
+watermark, no tracking. **No backend**: everything runs client side, the
+image never leaves the browser. That is both a product argument (privacy)
+and an architectural constraint: every feature must work as a static site.
 
 ## 2. Architecture
 
 ```
 Snapshot/
-├── frontend/                  # React 18 + Vite — SPA 100 % statique
-│   ├── index.html             # SEO : meta, OG, JSON-LD, favicons, fonts
+├── frontend/                  # React 18 + Vite, 100% static SPA
+│   ├── index.html             # SEO: meta, OG, JSON-LD, favicons, fonts
 │   ├── public/                # favicons, manifest, robots.txt, sitemap, og-image
 │   └── src/
-│       ├── main.jsx           # entrée : monte <App/>, importe tokens+base
-│       ├── App.jsx            # HashRouter : / (landing), /editor, /design
-│       ├── assets/logo.png    # logo (généré par IA, détouré)
+│       ├── main.jsx           # entry point: mounts <App/>, imports tokens+base
+│       ├── App.jsx            # HashRouter: / (landing), /editor, /design
+│       ├── assets/logo.png    # logo
 │       ├── styles/
-│       │   ├── tokens.css     # TOUS les tokens du design system
-│       │   └── base.css       # reset + fondations typo
-│       ├── ui/                # design system (composants réutilisables)
-│       ├── editor/            # domaine éditeur
-│       │   ├── EditorPage.jsx # assemblage + raccourcis clavier
-│       │   ├── Toolbar.jsx    # import, fond, largeur/marge, cadre, export
-│       │   ├── CanvasStage.jsx# scène exportée + wrapper zoom (.scene-sizer)
-│       │   ├── BackgroundPanel.jsx # 7 catégories + constructeur custom
-│       │   ├── editorStore.js # état Zustand + historique undo/redo
-│       │   ├── backgrounds.js # catégories + buildGradient()
-│       │   ├── backgrounds.data.js # 156 fonds GÉNÉRÉS (ne pas éditer)
-│       │   └── exportImage.js # rasterisation html-to-image
-│       └── pages/             # LandingPage (accueil) + DesignSystemPage
-├── .github/workflows/deploy.yml # build + déploiement GitHub Pages
-├── research/                  # analyse du produit de référence (pas de code)
+│       │   ├── tokens.css     # ALL design system tokens
+│       │   └── base.css       # reset + typographic foundations
+│       ├── ui/                # design system (reusable components)
+│       ├── editor/            # editor domain
+│       │   ├── EditorPage.jsx # assembly + keyboard shortcuts
+│       │   ├── Toolbar.jsx    # import, background, width/padding, frame, export
+│       │   ├── CanvasStage.jsx# exported scene + zoom wrapper (.scene-sizer)
+│       │   ├── BackgroundPanel.jsx # 7 categories + custom builder
+│       │   ├── editorStore.js # Zustand state + undo/redo history
+│       │   ├── backgrounds.js # categories + buildGradient()
+│       │   ├── backgrounds.data.js # 156 GENERATED backgrounds (do not edit)
+│       │   └── exportImage.js # html-to-image rasterization
+│       └── pages/             # LandingPage (home) + DesignSystemPage
+├── docs/media/                # README showcase assets (screenshots, GIFs, video)
+├── scripts/                   # demo fixture + Playwright recording script
+├── .github/workflows/deploy.yml # build + GitHub Pages deployment
 └── .vscode/tasks.json         # Dev / Build / Preview
 ```
 
-## 3. Démarrage & déploiement
+## 3. Running and deploying
 
-| Quoi | Comment |
+| What | How |
 |---|---|
-| Dev | `Ctrl+Shift+B` dans VS Code, ou `cd frontend && npm run dev` |
-| URL dev | http://localhost:5173/snapshot/ (le `base` s'applique aussi en dev) |
-| Build | `npm run build` → `frontend/dist` |
-| Preview build | `npm run preview` → http://localhost:4173/snapshot/ |
-| Prod | push sur `main` → GitHub Actions → https://valtielchan.github.io/snapshot/ |
+| Dev | `Ctrl+Shift+B` in VS Code, or `cd frontend && npm run dev` |
+| Dev URL | http://localhost:5173/snapshot/ (`base` applies in dev too) |
+| Build | `npm run build`, output in `frontend/dist` |
+| Preview build | `npm run preview`, http://localhost:4173/snapshot/ |
+| Prod | push to `main`, GitHub Actions, https://valtielchan.github.io/snapshot/ |
 
-**Contraintes GitHub Pages** (hébergement statique pur) :
-- `base: '/snapshot/'` dans `vite.config.js` — doit correspondre au nom du repo.
-- **HashRouter** (pas BrowserRouter) : pas de rewrite serveur possible, le
-  hash évite les 404 au rechargement des routes.
-- Les URL absolues (OG, canonical, sitemap) pointent sur
-  `https://valtielchan.github.io/snapshot/` — à changer si le repo bouge.
+**GitHub Pages constraints** (pure static hosting):
+- `base: '/snapshot/'` in `vite.config.js` must match the repository name.
+- **HashRouter** (not BrowserRouter): no server rewrite is possible, the hash
+  avoids 404s when reloading a route.
+- Absolute URLs (OG, canonical, sitemap) point at
+  `https://valtielchan.github.io/snapshot/`, update them if the repo moves.
 
 ## 4. Design system (front)
 
-**Style : néo-brutalisme bicolore.** Références vivantes sur `/design`.
+**Style: two-tone neo-brutalism.** Living reference on `/design`.
 
-### Règles non négociables
-1. **Deux couleurs d'accent, pas une de plus** : `--primary: #EF8783`
-   (corail) et `--secondary: #FFC38C` (pêche). Neutres : `--ink`, `--paper`,
-   `--surface`, `--muted`. Sémantiques (parcimonie) : `--danger`, `--success`.
-2. **Zéro dégradé, zéro arrondi, zéro ombre floue dans l'UI.**
-   Bordures `3px solid var(--ink)`, ombres dures décalées
-   (`box-shadow: 3px 3px 0 var(--ink)` — rester sobre), angles vifs.
-   *Exception contrôlée* : la **scène exportée** (CanvasStage) est du contenu
-   produit — dégradés et ombres douces y sont normaux.
-3. **Toute valeur visuelle vient d'un token** (`styles/tokens.css`).
-4. **Typo** : Archivo Black (titres, uppercase), Archivo (texte),
-   monospace pour les valeurs numériques.
-5. Interactions : hover = translation **-1px** + ombre +1px ; clic =
-   translation +1px + ombre réduite. Subtil, jamais spectaculaire.
-6. **Les boutons ont une hauteur FIXE par taille** (sm 32 / md 40 / lg 48,
-   IconButton 40). **L'état toggle/pressed ne bouge pas la géométrie** :
-   couleurs inversées, même position, même ombre.
+### Non-negotiable rules
+1. **Two accent colors, not one more**: `--primary: #EF8783` (coral) and
+   `--secondary: #FFC38C` (peach). Neutrals: `--ink`, `--paper`, `--surface`,
+   `--muted`. Semantic (sparingly): `--danger`, `--success`.
+2. **No gradients, no rounded corners, no blurred shadows in the UI.**
+   Borders `3px solid var(--ink)`, hard offset shadows
+   (`box-shadow: 3px 3px 0 var(--ink)`, keep it restrained), sharp angles.
+   *Controlled exception*: the **exported scene** (CanvasStage) is product
+   content, gradients and soft shadows are normal there.
+3. **Every visual value comes from a token** (`styles/tokens.css`).
+4. **Type**: Archivo Black (titles, uppercase), Archivo (body), monospace for
+   numeric values.
+5. Interactions: hover = **-1px** translation + 1px larger shadow; click =
+   +1px translation + reduced shadow. Subtle, never spectacular.
+6. **Buttons have a FIXED height per size** (sm 32 / md 40 / lg 48,
+   IconButton 40). **The toggle/pressed state never moves the geometry**:
+   inverted colors, same position, same shadow.
 
-### Ajouter un composant UI
-1. Le coder dans `src/ui/index.jsx` + styles `.ds-<nom>` dans `ui.css`.
-2. N'utiliser que des tokens.
-3. **L'ajouter à la vitrine `/design`** avec toutes ses variantes.
-4. Accessibilité : aria-label, focus visible, clavier.
+### Adding a UI component
+1. Write it in `src/ui/index.jsx` + `.ds-<name>` styles in `ui.css`.
+2. Use tokens only.
+3. **Add it to the `/design` showcase** with all its variants.
+4. Accessibility: aria-label, visible focus, keyboard support.
 
-## 5. Conventions front (React)
+## 5. Front-end conventions (React)
 
-- **Composants fonction + hooks**, export nommé, PascalCase.
-- **État global : Zustand** (`editorStore`). Pas de Redux.
-- **Éditeur : toute propriété visuelle du document passe par `apply(patch)`**
-  — c'est ce qui alimente l'undo/redo. Zoom et image sont hors historique
-  (navigation, pas édition), c'est voulu.
-- CSS par domaine (`editor.css`, `landing.css`), classes BEM-light.
-- Texte UI, landing et SEO en **anglais** (produit international), code en
-  **anglais**. Cette doc (AGENTS.md) reste en français.
-- **Icônes : Font Awesome** (`@fortawesome/react-fontawesome`), jamais
-  d'emojis dans l'interface.
-- **Historique — deux familles d'actions** : action instantanée (clic swatch,
-  toggle) → `apply(patch)` ; geste continu (drag de slider, color picker) →
-  `preview(patch)` pendant le geste puis `commit()` à la fin (relâchement,
-  fermeture du picker). Un drag entier = UNE entrée d'historique. Le composant
-  `Slider` expose `onCommit` pour ça ; les inputs couleur natifs committent
-  sur l'événement DOM `change` (voir `ColorInput` dans BackgroundPanel).
-- **Aucun appel réseau applicatif** : pas de fetch, pas d'analytics. Si une
-  feature semble exiger un serveur, repenser la feature.
+- **Function components + hooks**, named exports, PascalCase.
+- **Global state: Zustand** (`editorStore`). No Redux.
+- **Editor: every visual document property goes through `apply(patch)`**,
+  that is what feeds undo/redo. Zoom and image stay out of history
+  (navigation, not edition), on purpose.
+- CSS per domain (`editor.css`, `landing.css`), BEM-light class names.
+- UI text, landing, SEO, code and documentation are all in **English**.
+- **Icons: Font Awesome** (`@fortawesome/react-fontawesome`), never emojis in
+  the interface.
+- **No em dashes anywhere**: not in the UI, not in the code, not in the docs.
+  Use a colon, a comma or a full stop.
+- **History, two families of actions**: instant action (swatch click, toggle)
+  goes through `apply(patch)`; continuous gesture (slider drag, color picker)
+  uses `preview(patch)` during the gesture then `commit()` at the end
+  (release, picker close). A whole drag = ONE history entry. The `Slider`
+  component exposes `onCommit` for that; native color inputs commit on the
+  DOM `change` event (see `ColorInput` in BackgroundPanel).
+- **No application network calls**: no fetch, no analytics. If a feature seems
+  to require a server, rethink the feature.
 
-### Ajouter une feature à l'éditeur (recette)
-1. **État** : propriété dans `editorStore.js` (+ `DOC_KEYS` si annulable).
-2. **Rendu** : l'appliquer dans `CanvasStage.jsx`.
-3. **Contrôle** : Toolbar ou panneau, en composants du design system.
-4. **Raccourci** éventuel : `EditorPage.jsx`.
-5. Vérifier le rendu à l'écran **ET** dans le PNG exporté (html-to-image ne
-   supporte pas tout le CSS — tester l'export est obligatoire).
+### Adding an editor feature (recipe)
+1. **State**: property in `editorStore.js` (+ `DOC_KEYS` if undoable).
+2. **Render**: apply it in `CanvasStage.jsx`.
+3. **Control**: Toolbar or panel, built from design system components.
+4. **Shortcut** if relevant: `EditorPage.jsx`.
+5. Check the result on screen **AND** in the exported PNG (html-to-image does
+   not support all of CSS, testing the export is mandatory).
 
-## 6. SEO & assets
+## 6. SEO and assets
 
-- `index.html` porte tout le SEO : title/description, Open Graph + image
-  1200×630, Twitter card, canonical, JSON-LD `WebApplication`, thème.
-- `public/` : favicon.ico multi-tailles, PNG 16/32/192/512, apple-touch-icon,
+- `index.html` carries all the SEO: title/description, Open Graph + 1200x630
+  image, Twitter card, canonical, `WebApplication` JSON-LD, theme color.
+- `public/`: multi-size favicon.ico, 16/32/192/512 PNGs, apple-touch-icon,
   `manifest.webmanifest`, `robots.txt`, `sitemap.xml`.
-- Le logo source est généré par IA (voir `research/dev-checks/logo-raw.png`),
-  détouré et décliné par `scratchpad/make_assets.py` (script conservé dans
-  l'historique de session ; le refaire à la main est simple : PIL, flood-fill
-  depuis les bords, resize LANCZOS).
-- La landing (`pages/LandingPage.jsx`) est la page d'accueil `/` : HTML
-  sémantique (article, nav, aria-labelledby), un seul H1.
+- The landing page (`pages/LandingPage.jsx`) is the `/` route: semantic HTML
+  (article, nav, aria-labelledby), a single H1.
+- Showcase media for the README lives in `docs/media/` and is regenerated by
+  `scripts/record-demo.mjs` (see section 9).
 
-## 7. Qualité & vérification
+## 7. Quality and verification
 
-- **Pas de commit sans smoke test** : `npm run dev`, importer une image,
-  changer le fond, exporter un PNG.
-- Avant un push : `npm run build && npm run preview` et re-tester sur le
-  build (le `base` et le HashRouter peuvent diverger entre dev et prod).
-- Vérifier `/design` après toute modif du design system.
-- Erreurs console navigateur = à traiter, pas à ignorer.
+- **No commit without a smoke test**: `npm run dev`, import an image, change
+  the background, export a PNG.
+- Before pushing: `npm run build && npm run preview` and retest on the build
+  (`base` and HashRouter can behave differently between dev and prod).
+- Check `/design` after any design system change.
+- Browser console errors are to be fixed, not ignored.
 
-## 8. Pièges connus
+## 8. Known traps
 
-- **html-to-image + fonts externes** : `skipFonts: true` obligatoire dans
-  `exportImage.js`. Si un jour la scène contient du texte, embarquer la
-  fonte en data-URI plutôt que retirer ce flag.
-- **Zoom & scroll de la scène** : le zoom est un `transform: scale()` qui ne
-  change pas la taille layout. D'où `.scene-sizer` (dimensionné à
-  `taille × zoom`) + centrage `margin: auto` dans `.editor__scroll`.
-  Ne pas remettre le scroll sur `.editor__body` (il porte les panneaux
-  flottants sticky), ne pas centrer avec grid `place-items: center` (haut
-  inatteignable en overflow). L'export neutralise le transform
-  (`style: {transform: 'none'}`).
-- **StrictMode React** : les effets se montent deux fois en dev — listeners
-  globaux idempotents avec cleanup.
-- **`backgrounds.data.js` est généré** : ne pas l'éditer à la main.
-- **base Vite** : si le repo GitHub est renommé, changer `base` dans
-  `vite.config.js` ET les URL absolues de `index.html`/`robots.txt`/`sitemap.xml`.
+- **html-to-image + external fonts**: `skipFonts: true` is mandatory in
+  `exportImage.js`. If the scene ever contains text, embed the font as a
+  data URI rather than removing that flag.
+- **Scene zoom and scroll**: zoom is a `transform: scale()` that does not
+  change the layout size. Hence `.scene-sizer` (sized to `size x zoom`) plus
+  `margin: auto` centering inside `.editor__scroll`. Do not move the scroll
+  back to `.editor__body` (it carries the sticky floating panels), and do not
+  center with `place-items: center` (the top becomes unreachable on overflow).
+  The export neutralizes the transform (`style: {transform: 'none'}`).
+- **React StrictMode**: effects mount twice in dev, so global listeners must
+  be idempotent and clean up after themselves.
+- **`backgrounds.data.js` is generated**: do not edit it by hand.
+- **Vite base**: if the GitHub repo is renamed, change `base` in
+  `vite.config.js` AND the absolute URLs in
+  `index.html` / `robots.txt` / `sitemap.xml`.
+
+## 9. Regenerating the showcase media
+
+`scripts/record-demo.mjs` drives the app with Playwright, records the session
+and writes `docs/media/`. The root `package.json` exists only for that script.
+It needs ffmpeg on the PATH:
+
+```bash
+npm install && npx playwright install chromium    # once, at the repo root
+cd frontend && npm run build && npm run preview   # serves http://localhost:4173/snapshot/
+npm run demo                                      # from the repo root
+```
+
+The demo input image (`docs/media/demo-input.png`) is itself generated from
+`scripts/demo-app.html`, so the whole showcase is reproducible.

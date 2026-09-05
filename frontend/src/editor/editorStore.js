@@ -2,9 +2,9 @@
  * Editor store (Zustand) with undo/redo history.
  *
  * Two ways to change the document:
- * - `apply(patch)`   — instant action (swatch click, toggle): pushes ONE
+ * - `apply(patch)`   instant action (swatch click, toggle): pushes ONE
  *                      history entry immediately.
- * - `preview(patch)` + `commit()` — continuous gestures (slider drag, color
+ * - `preview(patch)` + `commit()` continuous gestures (slider drag, color
  *                      picker): `preview` updates the document live WITHOUT
  *                      touching history, but remembers the pre-gesture state
  *                      once; `commit` (on release/close) pushes that single
@@ -53,7 +53,7 @@ export const useEditor = create((set, get) => ({
       previewBase: null,
     })),
 
-  /** Live change during a gesture — no history entry yet. */
+  /** Live change during a gesture: no history entry yet. */
   preview: (patch) =>
     set((state) => ({
       ...patch,

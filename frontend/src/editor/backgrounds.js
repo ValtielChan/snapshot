@@ -1,36 +1,22 @@
 /**
- * Bibliothèque de fonds + constructeur de dégradés custom.
+ * Background library + custom gradient builder.
  *
- * NB : les dégradés sont un contenu produit (le visuel exporté par
- * l'utilisateur), pas des couleurs d'UI — le design system, lui, reste
- * strictement bicolore et sans dégradé.
+ * Note: gradients here are product content (the visual the user exports),
+ * not UI colors. The design system itself stays strictly two-tone and
+ * gradient-free.
  *
- * Les 7 catégories (156 fonds) proviennent de l'app de référence
- * (research/) via backgrounds.data.js (généré, ne pas éditer à la main).
+ * The 7 categories (156 backgrounds) live in backgrounds.data.js
+ * (generated, do not edit by hand).
  */
 
 import { RAW_CATEGORIES } from './backgrounds.data'
 
-// English display labels (the generated data file keeps its original ids).
-const LABELS = {
-  calme: 'Calm',
-  cosmique: 'Cosmic',
-  colore: 'Colorful',
-  nature: 'Nature',
-  luxe: 'Luxury & Metallic',
-  uni: 'Solid',
-  sombre: 'Dark',
-}
-
-export const BACKGROUND_CATEGORIES = RAW_CATEGORIES.map((cat) => ({
-  ...cat,
-  label: LABELS[cat.id] ?? cat.label,
-}))
+export const BACKGROUND_CATEGORIES = RAW_CATEGORIES
 
 export const DEFAULT_BACKGROUND = RAW_CATEGORIES[0].items[9] // dusk (Calm)
 
 /* ------------------------------------------------------------------ */
-/* Constructeur custom : 4 types de dégradé, direction, 2 à 4 couleurs */
+/* Custom builder: 4 gradient types, direction, 2 to 4 colors          */
 /* ------------------------------------------------------------------ */
 
 export const GRADIENT_TYPES = [
@@ -41,10 +27,10 @@ export const GRADIENT_TYPES = [
 ]
 
 /**
- * Construit la valeur CSS d'un fond custom.
+ * Builds the CSS value of a custom background.
  * @param {'linear'|'radial'|'angular'|'diamond'} type
- * @param {number} angle 0–360
- * @param {string[]} colors couleurs actives (2 à 4), déjà filtrées
+ * @param {number} angle 0 to 360
+ * @param {string[]} colors active colors (2 to 4), already filtered
  */
 export function buildGradient(type, angle, colors) {
   if (colors.length === 0) return '#ffffff'
@@ -56,7 +42,7 @@ export function buildGradient(type, angle, colors) {
 
   switch (type) {
     case 'radial': {
-      // L'angle déplace le foyer du dégradé sur un cercle autour du centre.
+      // The angle moves the gradient focus along a circle around the center.
       const rad = (angle * Math.PI) / 180
       const x = Math.round(50 + 35 * Math.cos(rad))
       const y = Math.round(50 + 35 * Math.sin(rad))
@@ -65,8 +51,8 @@ export function buildGradient(type, angle, colors) {
     case 'angular':
       return `conic-gradient(from ${angle}deg at 50% 50%, ${stops})`
     case 'diamond':
-      // CSS n'a pas de vrai dégradé "diamant" : on l'approxime avec une
-      // ellipse closest-side, visuellement distincte du radial standard.
+      // CSS has no true "diamond" gradient: approximated with a
+      // closest-side ellipse, visually distinct from the standard radial.
       return `radial-gradient(ellipse closest-side at 50% 50%, ${stops})`
     case 'linear':
     default:

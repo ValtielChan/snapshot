@@ -1,7 +1,7 @@
 /* ============================================================
-   Éditeur — layout et scène.
-   L'UI suit le design system (tokens) ; la scène (contenu exporté)
-   est libre : dégradés, ombres douces… c'est le produit.
+   Editor: layout and scene.
+   The UI follows the design system (tokens); the scene (exported content)
+   is free: gradients, soft shadows, that is the product.
    ============================================================ */
 
 .editor {
@@ -56,7 +56,7 @@
 
 /* --- Corps ------------------------------------------------------ */
 /* .editor__body ne scrolle jamais : il porte les panneaux flottants
-   (sticky à l'écran). Le scroll vit dans .editor__scroll. */
+   (pinned on screen). Scrolling lives in .editor__scroll. */
 .editor__body {
   position: relative;
   flex: 1;
@@ -67,16 +67,16 @@
 .editor__scroll {
   flex: 1;
   overflow: auto;
-  display: flex; /* + margin:auto sur l'enfant = centré si ça tient,
+  display: flex; /* + margin:auto on the child = centered when it fits,
                     scrollable jusqu'aux 4 bords sinon */
   padding: var(--sp-6);
-  /* trame pointillée discrète, façon plan de travail */
+  /* subtle dotted grid, workbench style */
   background-image: radial-gradient(var(--disabled) 1.5px, transparent 1.5px);
   background-size: 24px 24px;
 }
 
-/* --- Scène (ce qui est exporté) --------------------------------- */
-/* Boîte layout à la taille visuelle (zoomée) de la scène. */
+/* --- Scene (what gets exported) --------------------------------- */
+/* Layout box at the visual (zoomed) size of the scene. */
 .scene-sizer {
   margin: auto;
   flex-shrink: 0;
@@ -192,7 +192,7 @@
 
 .bg-panel__section-title { display: flex; align-items: center; gap: var(--sp-2); }
 
-/* Sélecteur de type de dégradé (linéaire / radial / angulaire / diamant) */
+/* Gradient type selector (linear / radial / angular / diamond) */
 .bgc-types {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -213,7 +213,7 @@
 
 .bgc-type--active { background: var(--ink); color: var(--primary); }
 
-/* Arrêts de couleur (jusqu'à 4, masquables) */
+/* Color stops (up to 4, individually hideable) */
 .bgc-stops {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

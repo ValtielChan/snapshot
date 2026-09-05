@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Dev: Lancer l'app",
+      "label": "Dev: run the app",
       "type": "shell",
       "command": "npm run dev",
       "options": {
@@ -29,7 +29,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Preview: Build de production",
+      "label": "Preview: production build",
       "type": "shell",
       "command": "npm run preview",
       "options": {

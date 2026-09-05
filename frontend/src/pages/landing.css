@@ -1,4 +1,4 @@
-/* Landing page — accueil. */
+/* Landing page: home. */
 
 .landing {
   min-height: 100%;
@@ -132,7 +132,7 @@
 .landing__feature h3 { font-size: var(--text-md); }
 .landing__feature p { color: var(--muted); font-size: var(--text-sm); }
 
-/* --- Étapes ------------------------------------------------------------ */
+/* --- Steps ------------------------------------------------------------- */
 .landing__steps {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));

@@ -1,15 +1,15 @@
 /**
- * Export de la scène en image.
- * On rasterise le nœud DOM de la scène avec html-to-image (pixelRatio 2
- * pour un rendu net), puis on télécharge ou copie le blob.
+ * Scene export to image.
+ * The scene DOM node is rasterized with html-to-image (pixelRatio 2 for a
+ * crisp result), then the blob is downloaded or copied.
  */
 
 import { toBlob } from 'html-to-image'
 
-// skipFonts : la scène n'affiche pas de texte, et les feuilles Google Fonts
-// (cross-origin) feraient échouer l'inlining CSS de html-to-image.
-// style.transform: la scène porte le scale() du zoom d'affichage — on le
-// neutralise pour que l'export soit toujours à taille réelle (100 %).
+// skipFonts: the scene shows no text, and the cross-origin Google Fonts
+// stylesheets would break html-to-image CSS inlining.
+// style.transform: the scene carries the display zoom scale(), neutralized
+// here so the export is always at real size (100%).
 const EXPORT_OPTIONS = {
   pixelRatio: 2,
   cacheBust: true,

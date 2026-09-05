@@ -1,5 +1,5 @@
 /**
- * Design system showcase — /design
+ * Design system showcase: /design
  * Living visual reference: every component is mounted here with all its
  * variants. Update it whenever a component is added (see AGENTS.md).
  */
@@ -86,7 +86,7 @@ export function DesignSystemPage() {
           <h2>Display heading H2</h2>
           <h3>Display heading H3</h3>
           <p>
-            Body text — Archivo. Readable, direct, no frills. Numeric values switch to{' '}
+            Body text, Archivo. Readable, direct, no frills. Numeric values switch to{' '}
             <span className="dsp-mono">monospace 123 456</span>.
           </p>
           <p>

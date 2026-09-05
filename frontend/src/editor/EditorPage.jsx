@@ -27,7 +27,7 @@ export function EditorPage() {
   const [toast, setToast] = useState(null)
   const [exporting, setExporting] = useState(false)
 
-  // Raccourcis clavier globaux
+  // Global keyboard shortcuts
   useEffect(() => {
     const onKey = (e) => {
       if (!(e.ctrlKey || e.metaKey)) return
@@ -45,7 +45,7 @@ export function EditorPage() {
     return () => window.removeEventListener('keydown', onKey)
   }, [undo, redo, setZoom])
 
-  // Coller une image même quand la dropzone n'est plus montée
+  // Paste an image even when the dropzone is no longer mounted
   useEffect(() => {
     const onPaste = (e) => {
       const file = [...(e.clipboardData?.items ?? [])]
@@ -107,7 +107,7 @@ export function EditorPage() {
           {image ? <CanvasStage ref={sceneRef} /> : <Dropzone />}
         </div>
 
-        {/* Panneaux flottants : hors du conteneur scrollable → sticky à l'écran */}
+        {/* Floating panels: outside the scroll container, so pinned on screen */}
         {bgPanelOpen && image && <BackgroundPanel onClose={() => setBgPanelOpen(false)} />}
         {image && <ZoomControl />}
       </div>

@@ -1,5 +1,5 @@
 /**
- * Landing page (home) — fully static presentation of the app.
+ * Landing page (home): fully static presentation of the app.
  * Clean semantic HTML for SEO; the main CTA leads to the editor.
  */
 
@@ -23,7 +23,7 @@ const FEATURES = [
   {
     icon: faImages,
     title: '156 ready-made backgrounds',
-    text: 'Seven families of gradients and colors — from calm pastels to cosmic neons — applied in one click.',
+    text: 'Seven families of gradients and colors, from calm pastels to cosmic neons, applied in one click.',
   },
   {
     icon: faSliders,
@@ -177,14 +177,14 @@ export function LandingPage() {
           <h2>Your next screenshot deserves better than a raw PNG.</h2>
           <Link to="/editor">
             <Button variant="primary" size="lg">
-              Try it now — it's free
+              Try it now, it's free
             </Button>
           </Link>
         </section>
       </main>
 
       <footer className="landing__footer">
-        <span>Snapshot — open source, no tracking, no server.</span>
+        <span>Snapshot: open source, no tracking, no server.</span>
         <nav aria-label="Footer links">
           <Link to="/editor">Editor</Link>
           <Link to="/design">Design system</Link>

@@ -1,7 +1,7 @@
 /**
- * Design system Snapshot — composants néo-brutalistes.
- * Un seul point d'import : `import { Button, Panel, ... } from '../ui'`.
- * Styles dans ui.css, tokens dans styles/tokens.css.
+ * Snapshot design system: neo-brutalist components.
+ * Single import point: `import { Button, Panel, ... } from '../ui'`.
+ * Styles in ui.css, tokens in styles/tokens.css.
  */
 
 import { useEffect } from 'react'
@@ -112,7 +112,7 @@ export function Input({ error = false, className = '', ...props }) {
 /**
  * `onChange` fires continuously while dragging (live preview).
  * `onCommit` fires once when the gesture ends (mouse/touch release or key
- * release) — wire it to the history commit so a whole drag = one undo step.
+ * release): wire it to the history commit so a whole drag = one undo step.
  */
 export function Slider({ label, value, min, max, step = 1, unit = '', onChange, onCommit }) {
   return (
@@ -201,7 +201,7 @@ export function Swatch({ background, active = false, label, ...props }) {
   )
 }
 
-/* --- Toast (affichage simple, piloté par le parent) ------------------------------- */
+/* --- Toast (simple display, driven by the parent) --------------------------------- */
 export function Toast({ children }) {
   if (!children) return null
   return <div className="ds-toast">{children}</div>

@@ -1,5 +1,5 @@
 /* ============================================================
-   Composants du design system — styles.
+   Design system components: styles.
    Convention : .ds-<composant>[--variante]. Tout part des tokens.
    ============================================================ */
 
@@ -48,14 +48,14 @@
 .ds-btn--ghost:hover:not(:disabled) { border-color: var(--ink); transform: none; box-shadow: none; }
 .ds-btn--ghost:active:not(:disabled) { transform: none; }
 
-/* Hauteurs FIXES : tous les boutons d'une même taille s'alignent,
-   quel que soit leur contenu (texte, icône, emoji). */
+/* FIXED heights: every button of the same size lines up, whatever
+   its content (text, icon, emoji). */
 .ds-btn--sm { font-size: var(--text-xs); height: 32px; padding: 0 12px; }
 .ds-btn--md { font-size: var(--text-sm); height: 40px; padding: 0 16px; }
 .ds-btn--lg { font-size: var(--text-md); height: 48px; padding: 0 24px; }
 
-/* Bouton actif façon "outil sélectionné" (toolbar) : couleurs inversées,
-   MÊME géométrie que l'état repos — pas de translation, pas de changement
+/* Active button, "selected tool" style (toolbar): inverted colors,
+   SAME geometry as the resting state, no translation, no change
    d'ombre, sinon les boutons voisins ne s'alignent plus. */
 .ds-btn--pressed,
 .ds-btn--pressed:hover:not(:disabled) {
@@ -71,7 +71,7 @@
   align-items: center;
   justify-content: center;
   width: 40px;
-  height: 40px; /* aligné sur .ds-btn--md */
+  height: 40px; /* aligned with .ds-btn--md */
   font-size: 18px;
   border: var(--border);
   border-radius: var(--radius);

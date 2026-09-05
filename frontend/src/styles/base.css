@@ -1,4 +1,4 @@
-/* Base globale — reset minimal + fondations typographiques. */
+/* Global base: minimal reset + typographic foundations. */
 
 * {
   box-sizing: border-box;
@@ -25,7 +25,7 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  font-weight: 400; /* Archivo Black est déjà black */
+  font-weight: 400; /* Archivo Black is already black */
   line-height: 1.1;
   letter-spacing: -0.01em;
   margin: 0;

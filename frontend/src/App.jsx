@@ -3,8 +3,8 @@ import { EditorPage } from './editor/EditorPage'
 import { DesignSystemPage } from './pages/DesignSystemPage'
 import { LandingPage } from './pages/LandingPage'
 
-// HashRouter : GitHub Pages ne sert que des fichiers statiques (pas de
-// rewrite serveur) — le hash routing évite les 404 au rechargement.
+// HashRouter: GitHub Pages only serves static files (no server rewrite),
+// so hash routing avoids 404s on reload.
 export default function App() {
   return (
     <HashRouter>

@@ -1,14 +1,14 @@
 /**
- * La scène : ce que l'utilisateur compose et exporte.
- * Fond (dégradé/uni) + fenêtre cadrée (barre macOS) + image importée.
+ * The scene: what the user composes and exports.
+ * Background (gradient/solid) + framed window (macOS title bar) + image.
  *
- * Le zoom est un transform: scale() sur .scene, qui ne change PAS la taille
- * layout — d'où le wrapper .scene-sizer, dimensionné explicitement à la
- * taille zoomée : le conteneur scrollable voit ainsi la vraie taille
- * visuelle (pas de scroll si ça tient, scroll complet sinon).
+ * Zoom is a transform: scale() on .scene, which does NOT change the layout
+ * size, hence the .scene-sizer wrapper sized explicitly to the zoomed
+ * dimensions: the scrollable container then sees the real visual size (no
+ * scrollbar when it fits, full scroll when it does not).
  *
- * `sceneRef` pointe le nœud rasterisé à l'export (transform neutralisé
- * là-bas, voir exportImage.js).
+ * `sceneRef` points at the node rasterized on export (the transform is
+ * neutralized there, see exportImage.js).
  */
 
 import { forwardRef } from 'react'
@@ -17,7 +17,7 @@ import { useEditor } from './editorStore'
 const DOT_COLORS = ['#ff5f57', '#febc2e', '#28c840']
 const TITLEBAR_HEIGHT = 34
 
-/** Hauteur layout (non zoomée) de la scène, calculée depuis l'état. */
+/** Layout height (unzoomed) of the scene, derived from state. */
 function sceneHeight({ image, width, padding, frame, showBackground }) {
   const pad = showBackground ? padding : 0
   const contentWidth = width - 2 * pad
